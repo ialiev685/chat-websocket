@@ -4,11 +4,15 @@ import { WindowsChat } from "./components/WindowChat";
 import { ControllerChat } from "./components/ControllerChat";
 
 const App = () => {
-  const [] = useState();
+  const [massage, setMessage] = useState("");
+
+  const handleSendMessage = (msg) => {
+    setMessage(msg);
+  };
   return (
     <div className="App">
-      <WindowsChat />
-      <ControllerChat />
+      <WindowsChat textMessage={massage} />
+      <ControllerChat onSendMessage={handleSendMessage} />
     </div>
   );
 };
