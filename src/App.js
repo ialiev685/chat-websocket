@@ -1,16 +1,16 @@
-import {useState} from 'react'
+import { useState } from "react";
 
-import { WindowsChat } from './components/WindowChat'
-import {ControllerChat} from './components/ControllerChat'
+import { WindowsChat } from "./components/WindowChat";
+import { ControllerChat } from "./components/ControllerChat";
 
 const App = () => {
-  const []=useState()
+  const [] = useState();
   return (
     <div className="App">
       <WindowsChat />
-      <ControllerChat/>
+      <ControllerChat />
     </div>
   );
-}
+};
 
 export default App;
