@@ -5,6 +5,7 @@ export const ControllerChat = ({ onSendMessage }) => {
 
   const handleChangeText = (e) => {
     setText(e.target.value);
+    console.log(e.target.value);
   };
 
   const handleSendMessage = (e) => {

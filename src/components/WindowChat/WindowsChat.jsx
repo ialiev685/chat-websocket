@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from "react";
+import { ListMessages } from "../ListMessages";
 
 export const WindowsChat = ({ textMessage }) => {
   const [box, setBox] = useState([]);
 
   useEffect(() => {
-    const markupMessage = <p>{textMessage}</p>;
-    setBox((prevState) => [...prevState, markupMessage]);
+    setBox((prevState) => [...prevState, textMessage]);
   }, [textMessage]);
-  return (
-    <div>
-      <div className="your-box-message">{box}</div>
-      <div className="another-box-message"></div>
-    </div>
-  );
+  console.log();
+  return <ListMessages messages={box} />;
+  // <div>
+  //   <div className="your-box-message">{box}</div>
+  //   <div className="another-box-message"></div>
+  // </div>
 };
