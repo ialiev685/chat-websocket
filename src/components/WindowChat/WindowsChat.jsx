@@ -1,16 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { ListMessages } from "../ListMessages";
 
-export const WindowsChat = ({ textMessage }) => {
-  const [box, setBox] = useState([]);
+export const WindowsChat = ({ textMessage, name, isYou }) => {
+  const [boxUser, setBoxUses] = useState([]);
 
   useEffect(() => {
-    setBox((prevState) => [...prevState, textMessage]);
-  }, [textMessage]);
-  console.log();
-  return <ListMessages messages={box} />;
-  // <div>
-  //   <div className="your-box-message">{box}</div>
-  //   <div className="another-box-message"></div>
-  // </div>
+    setBoxUses((prevState) => [
+      ...prevState,
+      { name, text: textMessage, isYou },
+    ]);
+  }, [isYou, textMessage, name]);
+
+  return <ListMessages messages={boxUser} />;
 };

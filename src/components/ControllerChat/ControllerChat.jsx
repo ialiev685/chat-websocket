@@ -3,25 +3,21 @@ import React, { useState } from "react";
 export const ControllerChat = ({ onSendMessage }) => {
   const [text, setText] = useState("");
 
-  const handleChangeText = (e) => {
-    setText(e.target.value);
-    console.log(e.target.value);
-  };
-
   const handleSendMessage = (e) => {
     e.preventDefault();
-    console.log(e);
     onSendMessage(text);
+    setText("");
   };
 
   return (
     <div>
       <form onSubmit={handleSendMessage}>
         <input
+          autoComplete="off"
           type="text"
           name="text"
           value={text}
-          onChange={handleChangeText}
+          onChange={(e) => setText(e.target.value)}
         />
         <input type="submit" />
       </form>
