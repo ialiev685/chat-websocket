@@ -4,6 +4,7 @@ import { ControllerChat } from "./components/ControllerChat";
 import { EntryToChat } from "./components/EntryToChat";
 import { ListMessages } from "./components/ListMessages";
 import { v4 as uuidv4 } from "uuid";
+import { Container } from "./components/Container";
 
 const App = () => {
   const [massages, setMessages] = useState([]);
@@ -31,7 +32,7 @@ const App = () => {
       const message = JSON.parse(event.data);
       setMessages((prevState) => [...prevState, message]);
     };
-    socket.current.onclose = () => {
+    socket.current.onclose = (event) => {
       console.log("Соеденение закрыто");
     };
   };
@@ -49,7 +50,8 @@ const App = () => {
 
   const showEntry = name && conected;
   return (
-    <div className="App">
+    <Container>
+      <h2>Добро пожаловать в чат</h2>
       {!showEntry && (
         <EntryToChat connect={connection} onAddUser={setName} value={name} />
       )}
@@ -62,7 +64,7 @@ const App = () => {
           value={text}
         />
       )}
-    </div>
+    </Container>
   );
 };
 

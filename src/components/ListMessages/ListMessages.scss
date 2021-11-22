@@ -1,0 +1,42 @@
+.windows-massages {
+  min-width: 320px;
+  max-width: 425px;
+  height: 500px;
+
+  border-radius: 5px;
+  border: 1px solid rgb(172, 166, 166);
+
+  padding: 5px;
+
+  overflow-y: auto;
+
+  &__message {
+    padding: 2px 8px;
+
+    border-radius: 10px;
+
+    width: 280px;
+
+    margin-bottom: 6px;
+  }
+
+  &__message--connect {
+    background-color: rgb(179, 179, 245);
+    width: 310px;
+    text-align: left;
+  }
+
+  &__message--your-message {
+    margin-left: auto;
+
+    height: auto;
+    word-break: break-all;
+    background-color: rgb(138, 197, 138);
+  }
+
+  &__message--user-message {
+    height: auto;
+    word-break: break-all;
+    background-color: rgb(128, 190, 201);
+  }
+}
