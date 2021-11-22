@@ -1,7 +1,6 @@
 import React from "react";
 import { Form, Button, Row, Col } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
-// import Form from "react-bootstrap/Button";
 
 export const EntryToChat = ({ connect, onAddUser, value }) => {
   const handleAddName = (e) => {
@@ -24,7 +23,7 @@ export const EntryToChat = ({ connect, onAddUser, value }) => {
             />
           </Col>
           <Col xs={3}>
-            <Button type="button">Войти</Button>
+            <Button type="submit">Войти</Button>
           </Col>
         </Row>
       </form>
