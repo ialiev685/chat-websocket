@@ -14,7 +14,7 @@ const App = () => {
   const socket = useRef();
 
   const connection = () => {
-    socket.current = new WebSocket("ws://localhost:5000");
+    socket.current = new WebSocket("/");
 
     socket.current.onopen = () => {
       const message = {
