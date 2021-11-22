@@ -1,13 +1,9 @@
-import React, { useState } from "react";
+import React from "react";
 
-export const EntryToChat = ({ onAddName }) => {
-  const [user, setUser] = useState("");
-
+export const EntryToChat = ({ connect, onAddUser, value }) => {
   const handleAddName = (e) => {
     e.preventDefault();
-    setUser(e.target.value);
-    onAddName(user);
-    setUser("");
+    connect();
   };
 
   return (
@@ -17,8 +13,8 @@ export const EntryToChat = ({ onAddName }) => {
           autoComplete="off"
           type="text"
           placeholder="введите имя"
-          value={user}
-          onChange={(e) => setUser(e.target.value)}
+          value={value}
+          onChange={(e) => onAddUser(e.target.value)}
           required
         />
       </form>

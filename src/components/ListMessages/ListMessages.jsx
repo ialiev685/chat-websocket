@@ -1,14 +1,16 @@
 import React from "react";
 
-export const ListMessages = ({ messages }) => {
+export const ListMessages = ({ massages, name }) => {
   return (
     <div>
-      {messages.map((item, index) => {
-        const messageClassName = item.isYou ? "your" : "user";
-        const name = item.isYou ? "вы" : item.name;
+      {massages.map((item) => {
+        const messageClassName = item.user === name ? "your" : "user";
+
         return (
-          <p key={index} className={`${messageClassName}-message`}>
-            {name}: {item.text}
+          <p key={item.id} className={messageClassName}>
+            {item.event === "connect"
+              ? `Подключился пользователь ${item.user}`
+              : `${item.user}:  ${item.message}`}
           </p>
         );
       })}

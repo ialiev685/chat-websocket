@@ -1,12 +1,9 @@
-import React, { useState } from "react";
+import React from "react";
 
-export const ControllerChat = ({ onSendMessage }) => {
-  const [text, setText] = useState("");
-
+export const ControllerChat = ({ onSendMessage, onAddText, value }) => {
   const handleSendMessage = (e) => {
     e.preventDefault();
-    onSendMessage(text);
-    setText("");
+    onSendMessage();
   };
 
   return (
@@ -16,8 +13,8 @@ export const ControllerChat = ({ onSendMessage }) => {
           autoComplete="off"
           type="text"
           name="text"
-          value={text}
-          onChange={(e) => setText(e.target.value)}
+          value={value}
+          onChange={(e) => onAddText(e.target.value)}
         />
         <input type="submit" />
       </form>

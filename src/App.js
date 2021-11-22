@@ -1,49 +1,67 @@
-import { useState, useEffect } from "react";
+import { useState, useRef } from "react";
 
-import { WindowsChat } from "./components/WindowChat";
 import { ControllerChat } from "./components/ControllerChat";
 import { EntryToChat } from "./components/EntryToChat";
-const ws = new WebSocket("ws://localhost:5000");
+import { ListMessages } from "./components/ListMessages";
+import { v4 as uuidv4 } from "uuid";
 
 const App = () => {
-  const [massage, setMessage] = useState("");
+  const [massages, setMessages] = useState([]);
   const [name, setName] = useState("");
-  const [isYou, setIsYou] = useState(false);
+  const [text, setText] = useState("");
+  const [conected, setConected] = useState(false);
+  const socket = useRef();
 
-  // useEffect(() => {
-  //   if (name) {
-  //     ws.onopen = () => console.log("соеденено");
-  //     // ws.send(JSON.stringify(sendData));
-  //     setStatus(true);
-  //   }
-  // }, [name]);
+  const connection = () => {
+    socket.current = new WebSocket("ws://localhost:5000");
 
-  ws.onmessage = ({ data }) => {
-    console.log(data);
-    // const { name, massage } = JSON.parse(data);
-    // setMessage(massage);
-    // setName(name);
-    // setIsYou(false);
+    socket.current.onopen = () => {
+      const message = {
+        event: "connect",
+        user: name,
+        id: uuidv4(),
+      };
+      setConected(true);
+
+      socket.current.send(JSON.stringify(message));
+      console.log("Соеденение установлено!");
+    };
+
+    socket.current.onmessage = (event) => {
+      const message = JSON.parse(event.data);
+      setMessages((prevState) => [...prevState, message]);
+    };
+    socket.current.onclose = () => {
+      console.log("Соеденение закрыто");
+    };
   };
 
-  const handleAddName = (userName) => {
-    setName(userName);
-    setIsYou(true);
+  const handleSendMessage = () => {
+    const message = {
+      event: "message",
+      user: name,
+      message: text,
+      id: uuidv4(),
+    };
+
+    socket.current.send(JSON.stringify(message));
   };
 
-  const handleSendMessage = (msg) => {
-    setMessage(msg);
-    const data = { name, massage };
-
-    ws.send(JSON.stringify(data));
-  };
-
-  const send = name && massage;
+  const showEntry = name && conected;
   return (
     <div className="App">
-      {!name && <EntryToChat onAddName={handleAddName} />}
-      {send && <WindowsChat textMessage={massage} name={name} isYou={isYou} />}
-      {name && <ControllerChat onSendMessage={handleSendMessage} />}
+      {!showEntry && (
+        <EntryToChat connect={connection} onAddUser={setName} value={name} />
+      )}
+      {conected && <ListMessages massages={massages} name={name} />}
+
+      {conected && (
+        <ControllerChat
+          onAddText={setText}
+          onSendMessage={handleSendMessage}
+          value={text}
+        />
+      )}
     </div>
   );
 };
