@@ -1,0 +1,16 @@
+.section-chat {
+  background-color: #9d87c7;
+  height: 100vh;
+
+  padding-top: 20px;
+
+  &__caption {
+    margin-bottom: 20px;
+
+    color: whitesmoke;
+  }
+
+  &__caption--hidden {
+    display: none;
+  }
+}

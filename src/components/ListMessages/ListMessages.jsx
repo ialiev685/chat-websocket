@@ -1,7 +1,14 @@
-import React from "react";
+import React, { useRef, useEffect } from "react";
+
 import "./ListMessages.scss";
 
 export const ListMessages = ({ massages, name }) => {
+  const elementRef = useRef();
+
+  useEffect(() => {
+    elementRef.current.scrollIntoView({ behavior: "smooth" });
+  });
+
   return (
     <div className="windows-massages">
       {massages.map((item) => {
@@ -9,7 +16,10 @@ export const ListMessages = ({ massages, name }) => {
         const nameChat = item.user === name ? "Вы" : item.user;
 
         return item.event === "connect" ? (
-          <p className="windows-massages__message windows-massages__message--connect ">{`Подключился пользователь ${item.user}`}</p>
+          <p
+            key={item.id}
+            className="windows-massages__message windows-massages__message--connect "
+          >{`Подключился пользователь ${item.user}`}</p>
         ) : (
           <p
             key={item.id}
@@ -19,6 +29,7 @@ export const ListMessages = ({ massages, name }) => {
           </p>
         );
       })}
+      <div ref={elementRef}></div>
     </div>
   );
 };

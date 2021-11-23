@@ -1,10 +1,13 @@
 import { useState, useRef } from "react";
+import "./App.scss";
 
 import { ControllerChat } from "./components/ControllerChat";
 import { EntryToChat } from "./components/EntryToChat";
 import { ListMessages } from "./components/ListMessages";
 import { v4 as uuidv4 } from "uuid";
 import { Container } from "./components/Container";
+
+const HOST = window.location.origin.replace(/^http/, "ws");
 
 const App = () => {
   const [massages, setMessages] = useState([]);
@@ -15,7 +18,7 @@ const App = () => {
 
   const connection = () => {
     socket.current = new WebSocket("ws://localhost:5000/");
-
+    // socket.current = new WebSocket(HOST);
     socket.current.onopen = () => {
       const message = {
         event: "connect",
@@ -50,21 +53,31 @@ const App = () => {
 
   const showEntry = name && conected;
   return (
-    <Container>
-      <h2>Добро пожаловать в чат</h2>
-      {!showEntry && (
-        <EntryToChat connect={connection} onAddUser={setName} value={name} />
-      )}
-      {conected && <ListMessages massages={massages} name={name} />}
+    <section className="section-chat">
+      <Container>
+        <h2
+          className={
+            conected
+              ? "section-chat__caption section-chat__caption--hidden"
+              : "section-chat__caption"
+          }
+        >
+          Добро пожаловать в чат
+        </h2>
+        {!showEntry && (
+          <EntryToChat connect={connection} onAddUser={setName} value={name} />
+        )}
+        {conected && <ListMessages massages={massages} name={name} />}
 
-      {conected && (
-        <ControllerChat
-          onAddText={setText}
-          onSendMessage={handleSendMessage}
-          value={text}
-        />
-      )}
-    </Container>
+        {conected && (
+          <ControllerChat
+            onAddText={setText}
+            onSendMessage={handleSendMessage}
+            value={text}
+          />
+        )}
+      </Container>
+    </section>
   );
 };
 
